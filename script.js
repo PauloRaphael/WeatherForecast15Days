@@ -1,27 +1,29 @@
-var fifteenDays;
+let fifteenDays;
 
 const WEATHER_API_TOKEN = "" // YOUR API KEY HERE (for some reason)
+const URI = `http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3477/days/270?token=${WEATHER_API_TOKEN}`;
 
-fetch(`http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3477/days/270?token=${WEATHER_API_TOKEN}`)
-    .then(responde => responde.json())
-    .then(data => {
-        
-        fifteenDays = data.data.slice(0, 15);
-        
-    })
-    .then(() => {
+fetch(URI)
+    .then(response => response.json())
+    .then(respondeJson => {
+
+        fifteenDays = respondeJson.data.slice(0, 15);
 
         const blocks = document.querySelectorAll('.block');
 
         blocks.forEach((block, index) => {
 
             //getting data, max and min
-            const tempData = [fifteenDays[index].date, fifteenDays[index].temperature.max, fifteenDays[index].temperature.min];
-            
+            const tempData = {
+                DateTemp: fifteenDays[index].date,
+                MaxTemp: fifteenDays[index].temperature.max,
+                MinTemp: fifteenDays[index].temperature.min
+            };  
+
             //changing image
-            if(parseInt(tempData[1]) > 25) {
+            if (parseInt(tempData.MaxTemp) > 25) {
                 block.getElementsByTagName('img')[0].src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcqX1y4reo4wVEMfu53871t0Sv7v-vb9A31Q&s";
-            } else if(tempData[1] > 18) {
+            } else if (parseInt(tempData.MaxTemp) > 18) {
                 block.getElementsByTagName('img')[0].src = "https://cdn-icons-png.flaticon.com/512/158/158420.png"
             } else {
                 block.getElementsByTagName('img')[0].src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQilahueN_sF9N0AOquT4rFL1o_qcsttwB3Gg&s"
@@ -39,21 +41,18 @@ fetch(`http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3477/days/270?
             // getting all p's
             const paragraphs = block.querySelectorAll('.text-content p');
 
-            paragraphs.forEach((p, pIndex) => {
-                
-                //formating data
-                if (tempData[pIndex].length > 10) {
+            paragraphs.forEach((p, index) => {
+                const { DateTemp, MaxTemp, MinTemp} = tempData;
 
-                    let tempDate = new Date(Date.parse(tempData[pIndex].slice(0, 10).replaceAll("-", " ")));
-
-                    tempDate = tempDate.toString().slice(0, 15);
-                    
-                    p.innerHTML = "<span class=\"material-symbols-outlined\">calendar_month</span>" + tempDate;
-
-                } else {
-                    p.innerHTML = tempData[pIndex] + "º";
+                if (DateTemp.length > 10) {
+                    const tempDate = new Date(Date.parse(DateTemp.slice(0, 10).replaceAll('-', ' ')));
+                    p.innerHTML = `<span class="material-symbols-outlined">calendar_month</span>${tempDate.toString().slice(0, 15)}`;
                 }
-            
+
+                paragraphs[2].textContent = `Min: ${MinTemp}º`;
+                paragraphs[1].textContent = `Max: ${MaxTemp}º`;
+
+
             });
         });
     }).then(() => {
