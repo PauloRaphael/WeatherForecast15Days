@@ -1,13 +1,13 @@
 var fifteenDays;
 
-const WEATHER_API_TOKEN = "" // YOUR API KEY HERE
+const WEATHER_API_TOKEN = "" // YOUR API KEY HERE (for some reason)
 
 fetch(`http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3477/days/270?token=${WEATHER_API_TOKEN}`)
     .then(responde => responde.json())
     .then(data => {
         
         fifteenDays = data.data.slice(0, 15);
-
+        
     })
     .then(() => {
 
@@ -20,7 +20,7 @@ fetch(`http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3477/days/270?
             
             //changing image
             if(parseInt(tempData[1]) > 25) {
-                block.getElementsByTagName('img')[0].src = "https://upload.wikimedia.org/wikipedia/en/thumb/d/dd/The_Persistence_of_Memory.jpg/300px-The_Persistence_of_Memory.jpg";
+                block.getElementsByTagName('img')[0].src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcqX1y4reo4wVEMfu53871t0Sv7v-vb9A31Q&s";
             } else if(tempData[1] > 18) {
                 block.getElementsByTagName('img')[0].src = "https://cdn-icons-png.flaticon.com/512/158/158420.png"
             } else {
