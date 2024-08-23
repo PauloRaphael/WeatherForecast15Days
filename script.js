@@ -18,7 +18,30 @@ fetch(URI)
                 DateTemp: fifteenDays[index].date,
                 MaxTemp: fifteenDays[index].temperature.max,
                 MinTemp: fifteenDays[index].temperature.min
-            };  
+            };
+
+            const paragraphs = block.querySelectorAll('.text-content p');
+
+            paragraphs.forEach((p) => {
+                const { DateTemp, MaxTemp, MinTemp } = tempData;
+
+                if (DateTemp.length > 10) {
+                    const tempDate = new Date(Date.parse(DateTemp.slice(0, 10).replaceAll('-', ' ')));
+                    p.innerHTML = `<span class="material-symbols-outlined">calendar_month</span>${tempDate.toString().slice(0, 15)}`;
+                }
+
+                paragraphs[1].textContent = `Max: ${MaxTemp}º`;
+                paragraphs[2].textContent = `Min: ${MinTemp}º`;
+                
+
+                if (paragraphs.length > 1) {
+                    paragraphs[1].innerHTML = "<span class=\"material-symbols-outlined\">thermometer_gain</span>" + paragraphs[1].innerHTML; // Update the second paragraph
+                }
+                if (paragraphs.length > 2) {
+                    paragraphs[2].innerHTML = "<span class=\"material-symbols-outlined\">thermometer_minus</span>" + paragraphs[2].innerHTML; // Update the third paragraph
+                }
+
+            });
 
             //changing image
             if (parseInt(tempData.MaxTemp) > 25) {
@@ -28,45 +51,5 @@ fetch(URI)
             } else {
                 block.getElementsByTagName('img')[0].src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQilahueN_sF9N0AOquT4rFL1o_qcsttwB3Gg&s"
             }
-
-            // adding hover animation
-            block.addEventListener('mouseover', () => {
-                block.style.backgroundColor = '#b2d4f0';
-            });
-
-            block.addEventListener('mouseout', () => {
-                block.style.backgroundColor = (index % 2 === 0) ? '#d4e6f1' : '#e5e8e8';
-            });
-
-            // getting all p's
-            const paragraphs = block.querySelectorAll('.text-content p');
-
-            paragraphs.forEach((p, index) => {
-                const { DateTemp, MaxTemp, MinTemp} = tempData;
-
-                if (DateTemp.length > 10) {
-                    const tempDate = new Date(Date.parse(DateTemp.slice(0, 10).replaceAll('-', ' ')));
-                    p.innerHTML = `<span class="material-symbols-outlined">calendar_month</span>${tempDate.toString().slice(0, 15)}`;
-                }
-
-                paragraphs[2].textContent = `Min: ${MinTemp}º`;
-                paragraphs[1].textContent = `Max: ${MaxTemp}º`;
-
-
-            });
         });
-    }).then(() => {
-
-        document.querySelectorAll('.block').forEach(block => {
-            const paragraphs = block.querySelectorAll('.text-content p');
-
-            // Check if there are at least 3 paragraphs
-            if (paragraphs.length > 1) {
-                paragraphs[1].innerHTML = "<span class=\"material-symbols-outlined\">thermometer_gain</span>" + paragraphs[1].innerHTML; // Update the second paragraph
-            }
-            if (paragraphs.length > 2) {
-                paragraphs[2].innerHTML = "<span class=\"material-symbols-outlined\">thermometer_minus</span>" + paragraphs[2].innerHTML; // Update the third paragraph
-            }
-        });
-
     });
