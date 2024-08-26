@@ -1,55 +1,44 @@
-let fifteenDays;
-
-const WEATHER_API_TOKEN = "" // YOUR API KEY HERE (for some reason)
+const WEATHER_API_TOKEN = "def90c95ad3acd8fc3483827a36783e5" // YOUR API KEY HERE (for some reason)
 const URI = `http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3477/days/270?token=${WEATHER_API_TOKEN}`;
+
+const HAPPINESS_THRESHOLD = 18;
+const BERABLE_TRESHOLD = 25;
+
+const THERMOMETER_GAIN_ICON =  "<span class=\"material-symbols-outlined\">thermometer_gain</span>";
+const THERMOMETER_MINUS_ICON = "<span class=\"material-symbols-outlined\">thermometer_minus</span>";
+const CALENDAR_ICON = "<span class=\"material-symbols-outlined\">calendar_month</span>"
 
 fetch(URI)
     .then(response => response.json())
-    .then(respondeJson => {
+    .then(responseJson => {
 
-        fifteenDays = respondeJson.data.slice(0, 15);
+        const fifteenDaysWeather = responseJson.data.slice(0, 15);
 
         const blocks = document.querySelectorAll('.block');
 
         blocks.forEach((block, index) => {
-
-            //getting data, max and min
-            const tempData = {
-                DateTemp: fifteenDays[index].date,
-                MaxTemp: fifteenDays[index].temperature.max,
-                MinTemp: fifteenDays[index].temperature.min
-            };
+                
+            const { date: DayDate, temperature: { max: DayMaxTemp, min: DayMinTemp } } = fifteenDaysWeather[index];
 
             const paragraphs = block.querySelectorAll('.text-content p');
 
-            paragraphs.forEach((p) => {
-                const { DateTemp, MaxTemp, MinTemp } = tempData;
+            const date = new Date(Date.parse(DayDate.replace('-', ' ')));
 
-                if (DateTemp.length > 10) {
-                    const tempDate = new Date(Date.parse(DateTemp.slice(0, 10).replaceAll('-', ' ')));
-                    p.innerHTML = `<span class="material-symbols-outlined">calendar_month</span>${tempDate.toString().slice(0, 15)}`;
-                }
+            paragraphs[0].innerHTML = `${CALENDAR_ICON} ${date.toDateString()}`;
+            paragraphs[1].innerHTML = `${THERMOMETER_GAIN_ICON} Max: ${DayMaxTemp}º`;
+            paragraphs[2].innerHTML = `${THERMOMETER_MINUS_ICON} Min: ${DayMinTemp}º`;
 
-                paragraphs[1].textContent = `Max: ${MaxTemp}º`;
-                paragraphs[2].textContent = `Min: ${MinTemp}º`;
-                
 
-                if (paragraphs.length > 1) {
-                    paragraphs[1].innerHTML = "<span class=\"material-symbols-outlined\">thermometer_gain</span>" + paragraphs[1].innerHTML; // Update the second paragraph
-                }
-                if (paragraphs.length > 2) {
-                    paragraphs[2].innerHTML = "<span class=\"material-symbols-outlined\">thermometer_minus</span>" + paragraphs[2].innerHTML; // Update the third paragraph
-                }
+            blockImage = block.getElementsByTagName('img')[0];
 
-            });
-
-            //changing image
-            if (parseInt(tempData.MaxTemp) > 25) {
-                block.getElementsByTagName('img')[0].src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcqX1y4reo4wVEMfu53871t0Sv7v-vb9A31Q&s";
-            } else if (parseInt(tempData.MaxTemp) > 18) {
-                block.getElementsByTagName('img')[0].src = "https://cdn-icons-png.flaticon.com/512/158/158420.png"
+            if (parseInt(DayMaxTemp) > BERABLE_TRESHOLD) {
+                blockImage.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcqX1y4reo4wVEMfu53871t0Sv7v-vb9A31Q&s";
+            } else if (parseInt(DayMaxTemp) > HAPPINESS_THRESHOLD) {
+                blockImage.src = "https://cdn-icons-png.flaticon.com/512/158/158420.png";
             } else {
-                block.getElementsByTagName('img')[0].src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQilahueN_sF9N0AOquT4rFL1o_qcsttwB3Gg&s"
+                blockImage.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQilahueN_sF9N0AOquT4rFL1o_qcsttwB3Gg&s";
             }
         });
+    }).catch(error =>{
+        console.error('Error fetching weather data:', error);
     });
