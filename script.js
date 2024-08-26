@@ -1,4 +1,4 @@
-const WEATHER_API_TOKEN = "def90c95ad3acd8fc3483827a36783e5" // YOUR API KEY HERE (for some reason)
+const WEATHER_API_TOKEN = "" // YOUR API KEY HERE (for some reason)
 const URI = `http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3477/days/270?token=${WEATHER_API_TOKEN}`;
 
 const HAPPINESS_THRESHOLD = 18;
@@ -12,7 +12,11 @@ fetch(URI)
     .then(response => response.json())
     .then(responseJson => {
 
+        console.log(responseJson);
+
         const fifteenDaysWeather = responseJson.data.slice(0, 15);
+
+        document.getElementById("title").innerHTML += ` em ${responseJson.name}!`; 
 
         const blocks = document.querySelectorAll('.block');
 
