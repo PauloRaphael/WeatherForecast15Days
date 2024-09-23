@@ -12,7 +12,7 @@ const CALENDAR_ICON = "<span class=\"material-symbols-outlined\">calendar_month<
 const IMAGES = {
     death: "https://hips.hearstapps.com/pop.h-cdn.co/assets/17/24/1024x1024/square-1497634598-eithe-981211-big.gif?resize=980:*",
     hot: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcqX1y4reo4wVEMfu53871t0Sv7v-vb9A31Q&s",
-    warm: "https://cdn-icons-png.flaticon.com/512/158/158420.png",
+    warm: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxuetdRDiY-masFfSqJ6LNP9Qs-aoSOEO80w&s",
     cold: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQilahueN_sF9N0AOquT4rFL1o_qcsttwB3Gg&s"
 };
 
