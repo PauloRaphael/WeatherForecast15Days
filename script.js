@@ -1,4 +1,4 @@
-const WEATHER_API_TOKEN = "24263ef9010ed86350afca9501294024" // YOUR API KEY HERE (for some reason)
+const WEATHER_API_TOKEN = "" // YOUR API KEY HERE (for some reason)
 const URI_270_DAYS = `http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3477/days/270?token=${WEATHER_API_TOKEN}`;
 
 const HAPPINESS_THRESHOLD = 18;
