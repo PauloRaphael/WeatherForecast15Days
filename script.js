@@ -1,4 +1,4 @@
-const WEATHER_API_TOKEN = "" // YOUR API KEY HERE (for some reason)
+const WEATHER_API_TOKEN = "24263ef9010ed86350afca9501294024" // YOUR API KEY HERE (for some reason)
 const URI_270_DAYS = `http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3477/days/270?token=${WEATHER_API_TOKEN}`;
 
 const HAPPINESS_THRESHOLD = 18;
@@ -16,14 +16,35 @@ const IMAGES = {
     cold: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQilahueN_sF9N0AOquT4rFL1o_qcsttwB3Gg&s"
 };
 
-fetch(URI_270_DAYS)
+document.getElementById("refresh").onclick = update_date;
+
+function update_date() {
+    console.log("cock")
+
+    document.getElementById("refresh").display = "none";
+
+    const blocks = document.querySelectorAll('.block');
+
+    blocks.forEach((block) => {
+
+        const paragraphs = block.querySelectorAll('.text-content p');
+
+        paragraphs[0].innerHTML = `Loading...`;
+        paragraphs[1].innerHTML = `Loading...`; 
+        paragraphs[2].innerHTML = `Loading...`;
+
+        blockImage = block.getElementsByTagName('img')[0];
+
+        blockImage.src = "https://via.placeholder.com/50"
+
+    });
+
+    fetch(URI_270_DAYS, {cache: "no-cache"})
     .then(response => response.json())
     .then(responseJson => {
         
         const fifteenDaysWeather = responseJson.data.slice(0, 15);
-        document.getElementById("title").innerHTML += ` em ${responseJson.name}!`; 
-
-        const blocks = document.querySelectorAll('.block');
+        document.getElementById("title").innerHTML = `Previsão do tempo para os proximos 15 dias em ${responseJson.name}!`; 
 
         blocks.forEach((block, index) => {
             
@@ -56,4 +77,8 @@ const getWeatherImage = (temperature) => {
     } else {
         return IMAGES.cold;
     }
-};
+ };
+}
+
+update_date();
+
