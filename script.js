@@ -20,7 +20,7 @@ function update_date() {
 
     document.getElementById("refresh").type = "hidden";
     document.getElementById("toCelcius").type = "hidden";
-    document.getElementById("toFarenheit").type = "button";
+    document.getElementById("toFarenheit").type = "hidden";
 
     const blocks = document.querySelectorAll('.block');
 
@@ -66,6 +66,8 @@ function update_date() {
     );
 
     document.getElementById("refresh").type = "button";
+
+    document.getElementById("toFarenheit").type = "button";
 
     }).catch(error =>{
         console.error('Error fetching weather data:', error);
