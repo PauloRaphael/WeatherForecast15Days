@@ -20,6 +20,7 @@ function update_date() {
 
     document.getElementById("refresh").type = "hidden";
     document.getElementById("toCelcius").type = "hidden";
+    document.getElementById("toFarenheit").type = "button";
 
     const blocks = document.querySelectorAll('.block');
 
@@ -132,12 +133,24 @@ function to_celcius() {
 
 function toggle_dark_mode() {
 
+    document.body.classList.toggle("dark-mode");
+    
 }
+
+const button = document.querySelector('.toggle-button');
+
+button.addEventListener('click', () => {
+    button.classList.toggle('active');
+});
+
 
 document.getElementById("refresh").onclick = update_date;
 
 document.getElementById("toFarenheit").onclick = to_farenheit;
 
 document.getElementById("toCelcius").onclick = to_celcius;
+
+document.getElementById("toggle-button").onclick = toggle_dark_mode;
+
 
 update_date();

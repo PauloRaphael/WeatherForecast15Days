@@ -1,107 +1,239 @@
-body {
-    padding: 15px;
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+    body {
+        padding: 15px;
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    h1 {
+        margin: 15px;
+    }
+
+    .container {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        max-width: 800px;
+        padding-top: 0;
+    }
+
+    .container h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+        display: inline-block;
+    }
+
+    .container input {
+        background-color: #b2d4f0;
+        padding: 5px;
+        border-radius: 15px;
+        width: 100px;
+    }
+
+    .container input:active {
+        background-color: #e5e8e8;
+        padding: 4px;
+        width: 95px;
+    }
+
+    .blocks {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .centered {
+        margin: auto;
+    }
+
+    .block {
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        transition: background-color 0.3s ease;
+    }
+
+    .block:nth-child(odd) {
+        background-color: #d4e6f1;
+    }
+
+    .block:nth-child(even) {
+        background-color: #e5e8e8;
+    }
+
+    .block:hover {
+        background-color: #b2d4f0;
+    }
+
+    .block:nth-child(even):hover {
+        background-color: #d4e6f1;
+    }
+
+    .block img {
+        width: 50px;
+        height: 50px;
+        margin-right: 15px;
+        border-radius: 5px;
+    }
+
+    .block .text-content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .block .text-content p {
+        display: flex;
+        position: relative;
+        padding-left: 10px;
+        font-size: 14px;
+        color: #333;
+        margin: 0;
+        align-items: center;
+        /* Center text vertically */
+        justify-content: left;
+        margin: 0;
+        height: 15px;
+    }
+
+
+body.dark-mode {
+    background-color: #121212;
 }
 
-h1 {
-    margin: 15px;
+.dark-mode h1,
+.dark-mode .container h1,
+.dark-mode .block .text-content p {
+    color: #808080;
 }
 
-.container {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 800px;
-    padding-top: 0;
+.dark-mode .container {
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
 }
 
-.container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-    display: inline-block;
+.dark-mode .container input {
+    background-color: #444;
+    color: #fff;
 }
 
-.container input {
-    background-color: #b2d4f0;
-    padding: 5px;
-    border-radius: 15px;
-    width: 100px;
+.dark-mode .container input:active {
+    background-color: #555;
 }
 
-.container input:active {
-    background-color: #e5e8e8;
-    padding: 4px;
-    width: 95px;
+.dark-mode .block {
+    background-color: #2a2a2a;
 }
 
-.blocks {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+.dark-mode .block:nth-child(odd) {
+    background-color: #333;
 }
 
-.centered {
-    margin: auto;
+.dark-mode .block:nth-child(even) {
+    background-color: #3a3a3a;
 }
 
-.block {
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    transition: background-color 0.3s ease;
+.dark-mode .block:hover {
+    background-color: #444;
 }
 
-.block:nth-child(odd) {
-    background-color: #d4e6f1;
+.dark-mode .block:nth-child(even):hover {
+    background-color: #555;
 }
 
-.block:nth-child(even) {
-    background-color: #e5e8e8;
+.dark-mode .block img {
+    border-color: #444;
 }
 
-.block:hover {
-    background-color: #b2d4f0;
+.dark-mode .blackbody {
+    background-color: #121212;
+    color: #D3D3D3;
 }
 
-.block:nth-child(even):hover {
-    background-color: #d4e6f1;
+
+body.dark-mode {
+    background-color: #121212;
 }
 
-.block img {
-    width: 50px;
-    height: 50px;
-    margin-right: 15px;
+.dark-mode h1,
+.dark-mode .container h1,
+.dark-mode .block .text-content p {
+    color: #D3D3D3;
+}
+
+.dark-mode .container {
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .container input {
+    background-color: #444;
+    color: #fff;
+}
+
+.dark-mode .container input:active {
+    background-color: #555;
+}
+
+.dark-mode .block {
+    background-color: #2a2a2a;
+}
+
+.dark-mode .block:nth-child(odd) {
+    background-color: #333;
+}
+
+.dark-mode .block:nth-child(even) {
+    background-color: #3a3a3a;
+}
+
+.dark-mode .block:hover {
+    background-color: #444;
+}
+
+.dark-mode .block:nth-child(even):hover {
+    background-color: #555;
+}
+
+.dark-mode .block img {
+    border-color: #444;
+}
+
+.dark-mode .blackbody {
+    background-color: #121212;
+    color: #f5f5f5;
+}
+
+.toggle-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #121212;
+    color: white;
+    padding: 10px 20px;
+    border: none;
     border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
-.block .text-content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
+.toggle-button.active {
+    background-color: #f5f5f5; 
+    transform: scale(0.8);
+    color: #121212;
+    opacity: 0.5;
 }
 
-.block .text-content p {
-    display: flex;
-    position: relative;
-    padding-left: 10px;
-    font-size: 14px;
-    color: #333;
-    margin: 0;
-    align-items: center;
-    /* Center text vertically */
-    justify-content: left;
-    margin: 0;
-    height: 15px;
+.toggle-button:active {
+    transform: scale(0.95); /* Smaller on click */
 }
