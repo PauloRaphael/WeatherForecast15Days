@@ -1,4 +1,4 @@
-const WEATHER_API_TOKEN = "" // YOUR API KEY HERE (for some reason)
+const WEATHER_API_TOKEN = "6c5b0bfa8b09d8864713cd76b9c679c1" // YOUR API KEY HERE (for some reason)
 const URI_270_DAYS = `http://apiadvisor.climatempo.com.br/api/v1/forecast/locale/3477/days/270?token=${WEATHER_API_TOKEN}`;
 
 const HAPPINESS_THRESHOLD = 18;
@@ -16,12 +16,10 @@ const IMAGES = {
     cold: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQilahueN_sF9N0AOquT4rFL1o_qcsttwB3Gg&s"
 };
 
-document.getElementById("refresh").onclick = update_date;
-
 function update_date() {
-    console.log("cock")
 
-    document.getElementById("refresh").display = "none";
+    document.getElementById("refresh").type = "hidden";
+    document.getElementById("toCelcius").type = "hidden";
 
     const blocks = document.querySelectorAll('.block');
 
@@ -62,7 +60,12 @@ function update_date() {
 
             blockImage.src = getWeatherImage(DayMaxTemp);
 
-        });
+        }
+        
+    );
+
+    document.getElementById("refresh").type = "button";
+
     }).catch(error =>{
         console.error('Error fetching weather data:', error);
     });
@@ -77,8 +80,64 @@ const getWeatherImage = (temperature) => {
     } else {
         return IMAGES.cold;
     }
- };
+ }
 }
 
-update_date();
+function to_farenheit() {
 
+    document.getElementById("toFarenheit").type = "hidden";
+    document.getElementById("toCelcius").type = "button";
+
+    const blocks = document.querySelectorAll('.block');
+    
+    blocks.forEach((block) => {
+
+        const paragraphs = block.querySelectorAll('.text-content p');
+
+        max = parseInt(paragraphs[1].innerHTML.slice(-3).slice(0, 2));
+        min = parseInt(paragraphs[2].innerHTML.slice(-3).slice(0, 2));
+        
+        max = parseInt((max * 1.8 + 32));
+        min = parseInt((min * 1.8 + 32));
+
+        paragraphs[1].innerHTML = `${THERMOMETER_GAIN_ICON} Max: ${max}º`; 
+        paragraphs[2].innerHTML = `${THERMOMETER_MINUS_ICON} Min: ${min}º`;
+
+    });
+}
+
+function to_celcius() {
+    
+    document.getElementById("toFarenheit").type = "button";
+    document.getElementById("toCelcius").type = "hidden";
+
+    const blocks = document.querySelectorAll('.block'); 
+
+    blocks.forEach((block) => {
+
+        const paragraphs = block.querySelectorAll('.text-content p');
+
+        max = parseInt(paragraphs[1].innerHTML.slice(-3).slice(0, 2));
+        min = parseInt(paragraphs[2].innerHTML.slice(-3).slice(0, 2));
+        
+        max = parseInt(Math.ceil((max - 32) * 5 / 9));
+        min = parseInt(Math.ceil((min - 32) * 5 / 9));
+
+        paragraphs[1].innerHTML = `${THERMOMETER_GAIN_ICON} Max: ${max}º`; 
+        paragraphs[2].innerHTML = `${THERMOMETER_MINUS_ICON} Min: ${min}º`;
+
+    });
+
+}
+
+function toggle_dark_mode() {
+
+}
+
+document.getElementById("refresh").onclick = update_date;
+
+document.getElementById("toFarenheit").onclick = to_farenheit;
+
+document.getElementById("toCelcius").onclick = to_celcius;
+
+update_date();
