@@ -1,5 +1,3 @@
----
-
 # Weather Forecast 15 Days 🌦️
 
 I created this project because I was tired of having to open websites and search for the 15-day weather forecast. With this project, you can see the weather forecast for the next 15 days in a specific city.  
